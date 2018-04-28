@@ -1,0 +1,21 @@
+一.编辑器配置：
+  IDE：win10 64
+       cython具体记不清楚了，按照网上的操作去运行就好了
+       python 3.5
+       mingw64等的一些环境变量的设置(在系统里面添加)
+二.写程序的时候的大致流程：
+   先写一个simple.cpp和simple.h文件，再在simple_code.pyx里面去包含进去.h文件
+   simple_code.pyx里面含有几个头文件
+   先是cdef的命名，定义什么的这个里面的写法基本上是c的头文件的调用
+   再是def的命名
+三.需要注意的问题：
+   1.对于simple_code.pyx里面的def的命名不能和它下面调用的函数名冲突，若一样则会产生抑制递归调用的问题
+   2.对于simple.h里面的内容，有个宏定义，也就是命名它的编译环境的问题
+    #ifdef __cplusplus
+    #define EXPORT extern "C" __declspec (dllexport)
+    #else
+    #define EXPORT __declspec (dllexport)
+    #endif // __cplusplus
+    这个的目的是为了跨平台操作更方便，指定编译器是什么
+   3.对于c里面的的二维数组什么的，可以使用指针，如果返回的也是指针的话，在def这个函数的时候就把这个函数命名为指针的类型，到时候直接return这个名字就好了。
+   
